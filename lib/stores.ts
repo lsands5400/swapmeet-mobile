@@ -24,19 +24,41 @@ export const useAuthStore = create<AuthState>((set, get) => ({
   },
   setProfile: (profile) => set({ profile }),
   fetchProfile: async () => {
-    const { user } = get();
-    if (!user) return;
+  const { user } = get();
+  if (!user) {
+    console.log('[v0] No user found, skipping profile fetch');
+    return;
+  }
 
-    const { data } = await supabase
-      .from('profiles')
-      .select('*')
-      .eq('id', user.id)
-      .single();
+  console.log('[v0] Fetching profile for user:', user.id);
+  
+  const { data, error } = await supabase
+    .from('profiles')
+    .select('*')
+    .eq('id', user.id)
+    .single();
 
-    if (data) {
-      set({ profile: data });
+  console.log('[v0] Profile fetch result:', { data, error });
+
+  if (data) {
+    set({ profile: data });
+  } else if (error) {
+    console.log('[v0] Profile fetch error:', error.message);
+    // Profile might not exist yet - create it
+    if (error.code === 'PGRST116') {
+      console.log('[v0] Profile not found, creating one...');
+      const { data: newProfile, error: insertError } = await supabase
+        .from('profiles')
+        .insert({ id: user.id })
+        .select()
+        .single();
+      
+      if (newProfile) {
+        set({ profile: newProfile });
+      }
     }
-  },
+  }
+},
   signOut: async () => {
     await supabase.auth.signOut();
     set({ session: null, user: null, profile: null });

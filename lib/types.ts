@@ -1,13 +1,12 @@
 export interface Profile {
   id: string;
-  email: string;
-  full_name: string | null;
+  display_name: string | null;  // Changed from full_name
   avatar_url: string | null;
   bio: string | null;
-  location: string | null;
+  zip_code: string | null;       // Added
+  neighborhood: string | null;   // Changed from location
   dietary_preferences: string[];
   created_at: string;
-  updated_at: string;
 }
 
 export interface Meal {

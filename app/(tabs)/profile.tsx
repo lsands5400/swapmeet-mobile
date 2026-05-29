@@ -22,9 +22,9 @@ export default function ProfileScreen() {
   const router = useRouter();
   const { profile, setProfile, signOut } = useAuthStore();
   const [editing, setEditing] = useState(false);
-  const [fullName, setFullName] = useState(profile?.full_name || '');
+  const [fullName, setFullName] = useState(profile?.display_name || '');
   const [bio, setBio] = useState(profile?.bio || '');
-  const [location, setLocation] = useState(profile?.location || '');
+  const [neighborhood, setneighborhood] = useState(profile?.neighborhood || '');
   const [dietaryPrefs, setDietaryPrefs] = useState<string[]>(profile?.dietary_preferences || []);
   const [loading, setLoading] = useState(false);
 
@@ -70,9 +70,9 @@ export default function ProfileScreen() {
     const { error } = await supabase
       .from('profiles')
       .update({
-        full_name: fullName,
+        display_name: fullName,
         bio,
-        location,
+        neighborhood,
         dietary_preferences: dietaryPrefs,
       })
       .eq('id', profile.id);
@@ -82,9 +82,9 @@ export default function ProfileScreen() {
     } else {
       setProfile({
         ...profile,
-        full_name: fullName,
+        display_name: fullName,
         bio,
-        location,
+        neighborhood,
         dietary_preferences: dietaryPrefs,
       });
       setEditing(false);
@@ -124,13 +124,13 @@ export default function ProfileScreen() {
 
         {!editing ? (
           <>
-            <Text style={styles.name}>{profile?.full_name || 'Add your name'}</Text>
+            <Text style={styles.name}>{profile?.display_name || 'Add your name'}</Text>
             <Text style={styles.email}>{profile?.email}</Text>
             {profile?.bio && <Text style={styles.bio}>{profile.bio}</Text>}
-            {profile?.location && (
-              <View style={styles.locationRow}>
+            {profile?.neighborhood && (
+              <View style={styles.neighborhoodRow}>
                 <Ionicons name="location" size={16} color={colors.textSecondary} />
-                <Text style={styles.location}>{profile.location}</Text>
+                <Text style={styles.neighborhood}>{profile.neighborhood}</Text>
               </View>
             )}
           </>
@@ -150,9 +150,9 @@ export default function ProfileScreen() {
               multiline
             />
             <Input
-              label="Location"
-              value={location}
-              onChangeText={setLocation}
+              label="Neighborhood"
+              value={neighborhood}
+              onChangeText={setneighborhood}
               placeholder="Your neighborhood"
             />
           </View>
@@ -266,12 +266,12 @@ const styles = StyleSheet.create({
     marginTop: spacing.sm,
     paddingHorizontal: spacing.lg,
   },
-  locationRow: {
+  neighborhoodRow: {
     flexDirection: 'row',
     alignItems: 'center',
     marginTop: spacing.sm,
   },
-  location: {
+  neighborhood: {
     fontSize: fontSize.sm,
     color: colors.textSecondary,
     marginLeft: spacing.xs,

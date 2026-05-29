@@ -8,6 +8,7 @@
     "date-fns": "^4.3.0",
     "expo": "~56.0.8",
     "expo-constants": "~56.0.16",
+    "expo-font": "~56.0.5",
     "expo-image": "~56.0.9",
     "expo-image-picker": "~56.0.15",
     "expo-linking": "~56.0.13",
@@ -21,6 +22,9 @@
     "react-native-reanimated": "4.3.1",
     "react-native-safe-area-context": "~5.7.0",
     "react-native-screens": "4.25.2",
+    "react-native-url-polyfill": "^3.0.0",
+    "react-native-web": "^0.21.2",
+    "react-native-worklets": "0.8.3",
     "zustand": "^5.0.14"
   },
   "devDependencies": {

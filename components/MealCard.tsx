@@ -33,7 +33,7 @@ export function MealCard({ meal }: MealCardProps) {
           style={styles.avatar}
         />
         <View style={styles.headerText}>
-          <Text style={styles.userName}>{meal.profiles?.full_name || 'Anonymous'}</Text>
+          <Text style={styles.userName}>{meal.profiles?.display_name || 'Anonymous'}</Text>
           <Text style={styles.location}>{meal.location || 'Location not set'}</Text>
         </View>
       </TouchableOpacity>
