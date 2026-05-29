@@ -25,7 +25,7 @@ export default function PostScreen() {
   const user = useAuthStore((state) => state.user);
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
-  const [portions, setPortions] = useState('1');
+  const [servings, setServings] = useState('1');
   const [location, setLocation] = useState('');
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
   const [imageUri, setImageUri] = useState<string | null>(null);
@@ -96,11 +96,11 @@ export default function PostScreen() {
         user_id: user?.id,
         title: title.trim(),
         description: description.trim() || null,
-        portions: parseInt(portions) || 1,
+        servings: parseInt(servings) || 1,
         location: location.trim() || null,
         dietary_tags: selectedTags,
-        image_url: imageUrl,
-        is_available: true,
+        image_urls: imageUrl,
+        available_for_swap: true,
       });
 
       if (error) throw error;
@@ -112,7 +112,7 @@ export default function PostScreen() {
       // Reset form
       setTitle('');
       setDescription('');
-      setPortions('1');
+      setServings('1');
       setLocation('');
       setSelectedTags([]);
       setImageUri(null);
@@ -161,10 +161,10 @@ export default function PostScreen() {
           <View style={styles.row}>
             <View style={styles.halfInput}>
               <Input
-                label="Portions"
+                label="servings"
                 placeholder="1"
-                value={portions}
-                onChangeText={setPortions}
+                value={servings}
+                onChangeText={setServings}
                 keyboardType="number-pad"
               />
             </View>

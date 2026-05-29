@@ -1,10 +1,10 @@
 export interface Profile {
   id: string;
-  display_name: string | null;  // Changed from full_name
+  display_name: string | null;
   avatar_url: string | null;
   bio: string | null;
-  zip_code: string | null;       // Added
-  neighborhood: string | null;   // Changed from location
+  zip_code: string | null;
+  neighborhood: string | null;
   dietary_preferences: string[];
   created_at: string;
 }
@@ -14,19 +14,14 @@ export interface Meal {
   user_id: string;
   title: string;
   description: string | null;
-  image_url: string | null;
-  portions: number;
+  image_urls: string | null;
+  servings: number;              // Changed from portions
   dietary_tags: string[];
-  cuisine_type: string | null;
-  available_from: string | null;
-  available_until: string | null;
-  location: string | null;
-  is_available: boolean;
+  cuisine: string | null;        // Changed from cuisine_type
+  available_for_swap: boolean;   // Changed from is_available
   created_at: string;
-  updated_at: string;
   profiles?: Profile;
   likes_count?: number;
-  comments_count?: number;
   is_liked?: boolean;
 }
 
@@ -34,10 +29,10 @@ export interface SwapRequest {
   id: string;
   requester_id: string;
   meal_id: string;
+  offered_meal_id: string | null;  // Added
   message: string | null;
   status: 'pending' | 'accepted' | 'rejected' | 'completed';
   created_at: string;
-  updated_at: string;
   requester?: Profile;
   meal?: Meal;
 }
@@ -46,7 +41,6 @@ export interface Conversation {
   id: string;
   participant_1: string;
   participant_2: string;
-  last_message: string | null;
   last_message_at: string | null;
   created_at: string;
   other_user?: Profile;
@@ -57,6 +51,7 @@ export interface Message {
   conversation_id: string;
   sender_id: string;
   content: string;
+  read: boolean;                   // Added
   created_at: string;
   sender?: Profile;
 }
@@ -68,14 +63,7 @@ export interface Like {
   created_at: string;
 }
 
-export interface Comment {
-  id: string;
-  user_id: string;
-  meal_id: string;
-  content: string;
-  created_at: string;
-  profiles?: Profile;
-}
+// Removed Comment interface - table doesn't exist
 
 export const DIETARY_TAGS = [
   'vegetarian',

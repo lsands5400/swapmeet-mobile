@@ -25,8 +25,8 @@ export default function ExploreScreen() {
 
     let query = supabase
       .from('meals')
-      .select(`*, profiles (*), likes (id, user_id), comments (id)`)
-      .eq('is_available', true);
+      .select(`*, profiles (*), likes (id, user_id)`)
+      .eq('available_for_swap', true);
 
     if (searchQuery) {
       query = query.or(`title.ilike.%${searchQuery}%,description.ilike.%${searchQuery}%`);

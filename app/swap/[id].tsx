@@ -112,8 +112,8 @@ export default function SwapScreen() {
   return (
     <ScrollView style={styles.container} contentContainerStyle={styles.content}>
       <View style={styles.mealPreview}>
-        {meal.image_url && (
-          <Image source={{ uri: meal.image_url }} style={styles.mealImage} contentFit="cover" />
+        {meal.image_urls && (
+          <Image source={{ uri: meal.image_urls }} style={styles.mealImage} contentFit="cover" />
         )}
         <View style={styles.mealInfo}>
           <Text style={styles.mealTitle}>{meal.title}</Text>

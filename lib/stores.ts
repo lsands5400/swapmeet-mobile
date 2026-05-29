@@ -79,22 +79,25 @@ export const useMealsStore = create<MealsState>((set, get) => ({
     set({ isLoading: true });
     const userId = useAuthStore.getState().user?.id;
 
-    const { data } = await supabase
+    console.log('[v0] Fetching meals...');
+
+    const { data, error } = await supabase
       .from('meals')
       .select(`
         *,
         profiles (*),
         likes (id, user_id),
-        comments (id)
       `)
-      .eq('is_available', true)
+      .eq('available_for_swap', true)
       .order('created_at', { ascending: false });
+
+      console.log('[v0] Meals fetch result:', { data, error });
 
     if (data) {
       const mealsWithCounts = data.map((meal: any) => ({
         ...meal,
         likes_count: meal.likes?.length || 0,
-        comments_count: meal.comments?.length || 0,
+        // comments_count: meal.comments?.length || 0,
         is_liked: meal.likes?.some((like: any) => like.user_id === userId) || false,
       }));
       set({ meals: mealsWithCounts });

@@ -38,8 +38,8 @@ export function MealCard({ meal }: MealCardProps) {
         </View>
       </TouchableOpacity>
 
-      {meal.image_url && (
-        <Image source={{ uri: meal.image_url }} style={styles.image} contentFit="cover" />
+      {meal.image_urls && (
+        <Image source={{ uri: meal.image_urls }} style={styles.image} contentFit="cover" />
       )}
 
       <View style={styles.content}>
@@ -66,7 +66,7 @@ export function MealCard({ meal }: MealCardProps) {
 
           <TouchableOpacity style={styles.actionButton}>
             <Ionicons name="chatbubble-outline" size={22} color={colors.textSecondary} />
-            <Text style={styles.actionText}>{meal.comments_count || 0}</Text>
+            {/* <Text style={styles.actionText}>{meal.comments_count || 0}</Text> */}
           </TouchableOpacity>
 
           <TouchableOpacity style={styles.swapButton} onPress={handleSwap}>
